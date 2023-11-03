@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package envoy;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "gitlab.eng.vmware.com/one-tanzu/unified-observability";
+
+message MetricRequest {
+  google.protobuf.Timestamp sent_timestamp = 1;
+  string query = 2;
+}
+
+message Entry {
+  string AriaProvider = 1;
+  string AriaService = 2;
+  string CloudAccountID = 3;
+  string KubernetesClusterName = 4;
+  string KubernetesWorkloadName = 5;
+  string KubernetesNamespaceName = 6;
+  string KubernetesPodFullname = 7;
+  string KubernetesPodName = 8;
+  string KubernetesServiceName = 9;
+  string Location = 10;
+  string PCCloudAddress = 11;
+  string Region = 12;
+  string KubernetesServiceRequestor = 13;
+  string KubernetesServiceResponder = 14;
+  string KubernetesSrcClusterName = 15;
+  string KubernetesSrcNamespace = 16;
+  string EntityUID = 17;
+  string DestSpaceName = 18;
+  string SourceSpaceName = 19;
+  string ResponseCode = 20;
+  string definedLabels = 21;
+}
+
+service ALSService {
+  rpc StreamMetric(MetricRequest) returns (stream Entry) {}
+}
